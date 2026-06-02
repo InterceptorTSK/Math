@@ -4,7 +4,7 @@ namespace Sys
     public static partial class Math
     {
 
-        // Absolute delta value function returns unsigned result (no overflows).
+        // Absolute delta value function returns unsigned result (without overflows).
 
 
         /// <summary>Absolute delta value |b - a|.</summary>
