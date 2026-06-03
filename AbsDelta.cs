@@ -11,29 +11,31 @@ namespace Sys
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static uint AbsDelta(int a, int b)
         {
-            return (a <= b) ? (uint)b - (uint)a : (uint)a - (uint)b;
+            unchecked { return (a <= b) ? (uint)b - (uint)a : (uint)a - (uint)b; }
         }
 
         /// <summary>Absolute delta value |b - a|.</summary>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static uint AbsDelta(uint a, uint b)
         {
-            return (a <= b) ? b - a : a - b;
+            unchecked { return (a <= b) ? b - a : a - b; }
         }
 
         /// <summary>Absolute delta value |b - a|.</summary>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static ulong AbsDelta(long a, long b)
         {
-            return (a <= b) ? (ulong)b - (ulong)a : (ulong)a - (ulong)b;
+            unchecked { return (a <= b) ? (ulong)b - (ulong)a : (ulong)a - (ulong)b; }
         }
 
         /// <summary>Absolute delta value |b - a|.</summary>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static ulong AbsDelta(ulong a, ulong b)
         {
-            return (a <= b) ? b - a : a - b;
+            unchecked { return (a <= b) ? b - a : a - b; }
         }
 
+        // Note: (uint)value - (uint)other, (ulong)value - (ulong)other
+        // throws System.OverflowException if assembly compiled with \checked flag.
     }
 }
