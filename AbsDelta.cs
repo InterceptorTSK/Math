@@ -16,10 +16,10 @@ namespace Sys
         // // Real math difference |b - a|:  | 4294967295| = 4294967295
         // // Real math difference |a - b|:  |-4294967295| = 4294967295
         // //                                                4294967295 (=uint.MaxValue)
-
+        //
         // Console.WriteLine( Sys.Math.AbsDelta(b, a) );  // Out as uint: 4294967295 - correct
         // Console.WriteLine( Sys.Math.AbsDelta(a, b) );  // Out as uint: 4294967295 - correct
-
+        //
         // // Common and incorrect calculations like this
         // Console.WriteLine( System.Math.Abs(b - a) );   // Out as int: 1 - incorrect!
         // Console.WriteLine( System.Math.Abs(a - b) );   // Out as int: 1 - incorrect!
