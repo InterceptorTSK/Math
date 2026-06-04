@@ -25,7 +25,7 @@ namespace Sys
         // Console.WriteLine( System.Math.Abs(a - b) );   // Out as int: 1 - incorrect!
 
 
-        /// <summary>Absolute delta value |b - a|.</summary>
+        /// <summary>Absolute delta value |b - a| without overflows.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static uint AbsDelta(int a, int b)
@@ -33,7 +33,7 @@ namespace Sys
             unchecked { return (a <= b) ? (uint)b - (uint)a : (uint)a - (uint)b; }
         }
 
-        /// <summary>Absolute delta value |b - a|.</summary>
+        /// <summary>Absolute delta value |b - a| without overflows.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static uint AbsDelta(uint a, uint b)
@@ -41,7 +41,7 @@ namespace Sys
             unchecked { return (a <= b) ? b - a : a - b; }
         }
 
-        /// <summary>Absolute delta value |b - a|.</summary>
+        /// <summary>Absolute delta value |b - a| without overflows.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static ulong AbsDelta(long a, long b)
@@ -49,7 +49,7 @@ namespace Sys
             unchecked { return (a <= b) ? (ulong)b - (ulong)a : (ulong)a - (ulong)b; }
         }
 
-        /// <summary>Absolute delta value |b - a|.</summary>
+        /// <summary>Absolute delta value |b - a| without overflows.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static ulong AbsDelta(ulong a, ulong b)
