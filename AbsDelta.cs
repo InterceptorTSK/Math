@@ -11,6 +11,20 @@ namespace Sys
         // Title: Absolute delta value |b - a|. Function returns unsigned result without overflows.
 
 
+        // int a = int.MinValue; // =-2147483648
+        // int b = int.MaxValue; // = 2147483647
+        // // Real math difference |b - a|:  | 4294967295| = 4294967295
+        // // Real math difference |a - b|:  |-4294967295| = 4294967295
+        // //                                                4294967295 (=uint.MaxValue)
+
+        // Console.WriteLine( Sys.Math.AbsDelta(b, a) );  // Out as uint: 4294967295 - correct
+        // Console.WriteLine( Sys.Math.AbsDelta(a, b) );  // Out as uint: 4294967295 - correct
+
+        // // Common and incorrect calculations like this
+        // Console.WriteLine( System.Math.Abs(b - a) );   // Out as int: 1 - incorrect!
+        // Console.WriteLine( System.Math.Abs(a - b) );   // Out as int: 1 - incorrect!
+
+
         /// <summary>Absolute delta value |b - a|.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
