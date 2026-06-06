@@ -1,8 +1,8 @@
 
-Author: Ivan Tsaryov
-Date: June 2, 2026
-Version: 0.01
-Revision: Experimental, Stable working draft
+-Author: Ivan Tsaryov
+-Date: June 2, 2026
+-Version: 0.01
+-Revision: Experimental, Stable working draft
 
 # AbsDelta - High-Performance, Overflow-Safe Absolute Difference for .NET
 
