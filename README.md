@@ -1,8 +1,8 @@
 
-* Author: Ivan Tsaryov
-* Date: June 2, 2026
-* Version: 0.01
-* Revision: Experimental, Stable working draft
+- Author: Ivan Tsaryov
+- Date: June 2, 2026
+- Version: 0.01
+- Revision: Experimental, Stable working draft
 
 # AbsDelta - High-Performance, Overflow-Safe Absolute Difference for .NET
 
@@ -18,9 +18,9 @@ By mapping signed arithmetic to cyclic unsigned bit-representations, these metho
 
 ## Features
 
-* Zero Allocations: Operating entirely within CPU registers (0 Bytes allocated).
-* Branchless Execution: Optimized into conditional move (cmovg/cmova) instructions, avoiding CPU branch mispredictions.
-* Aggressive Inlining: Completely erases method invocation overhead.
+- Zero Allocations: Operating entirely within CPU registers (0 Bytes allocated).
+- Branchless Execution: Optimized into conditional move (cmovg/cmova) instructions, avoiding CPU branch mispredictions.
+- Aggressive Inlining: Completely erases method invocation overhead.
 
 ## API Reference
 ```
