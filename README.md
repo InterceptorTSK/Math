@@ -10,13 +10,13 @@ A collection of ultra-optimized, branchless, and overflow-safe C# methods design
 
 By mapping signed arithmetic to cyclic unsigned bit-representations, these methods guarantee 100% mathematical correctness across the entire range of values, while running at maximum hardware speed.
 
-## The Problem with Math.Abs(b - a)
+### The Problem with Math.Abs(b - a)
 
 In standard C#, calculating the distance between two signed values using `System.Math.Abs(b - a)` is dangerous when dealing with extreme values (counters, indices etc):
-1. Silent Data Corruption: For example, if `a = int.MinValue` and `b = int.MaxValue`, the operation `|b - a|` overflows signed boundaries. `System.Math.Abs(-1)` or `System.Math.Abs(1)` returns `1`, which is completely incorrect.
+1. Silent Data Corruption: For example, if `a = int.MinValue` and `b = int.MaxValue`, the operation `|b - a|` or `|a - b|` overflows signed boundaries. `System.Math.Abs(1)` or `System.Math.Abs(-1)` returns `1`, which is completely incorrect.
 2. Crash Risks: Wrapping the operation in a checked block avoids bad data but throws `System.OverflowException` and down performance.
 
-## API Reference
+### API Reference
 ```
 // // The library provides 4 distinct overloads of "AbsDelta" within the "Sys.Math" static class:
 //
@@ -33,25 +33,25 @@ In standard C#, calculating the distance between two signed values using `System
 //     public static ulong AbsDelta(ulong a, ulong b);
 // }
 ```
-## Features
+### Features
 
 - Zero Allocations: Operating entirely within CPU registers (0 Bytes allocated).
 - Branchless Execution: Optimized into conditional move (`cmovg/cmova`) instructions, avoiding CPU branch mispredictions.
 - Aggressive Inlining: Completely erases method invocation overhead.
 
-## Performance & Benchmarks
+### Performance & Benchmarks
 
-Benchmarks using BenchmarkDotNet on .NET 8 / .NET 9 (x64 Architecture) comparing `AbsDelta(a, b)` pattern against standard approaches:
+Benchmarks using BenchmarkDotNet on .NET 8/9 (x64 Architecture) comparing `AbsDelta(a, b)` pattern against standard approaches:
 ```
-| Method                          | Mean Time | Ratio       | Mem Alloc | Behavior on Overflow (> MaxValue)         |
-|                                 |           |             |           |                                           |
-| Sys.Math.AbsDelta(int, int)     | 0.32 ns   | 0.59x       | 0         | 100% Correct (Returns max uint)           |
-| Sys.Math.AbsDelta(long, long)   | 0.54 ns   | 1.00x (Ref) | 0         | 100% Correct (Returns max ulong)          |
-|                                 |           |             |           |                                           |
-| Standard System.Math.Abs(b - a) | 0.31 ns   | 0.57x       | 0         | Corrupted Data (Returns 1 instead of max) |
-| checked(System.Math.Abs(b - a)) | 1.15 ns   | 2.13x       | 0         | Crashes Application (OverflowException)   |
+| Method                          | ~Time   | ~Ratio | Mem Alloc | Behavior on Overflow (> MaxValue)              |
+
+| Sys.Math.AbsDelta(int, int)     | 0.32 ns | 0.59x  | 0         | 100% Correct (Returns max uint)                |
+| Sys.Math.AbsDelta(long, long)   | 0.54 ns | 1.00x  | 0         | 100% Correct (Returns max ulong)               |
+
+| Standard System.Math.Abs(b - a) | 0.31 ns | 0.57x  | 0         | Corrupted Data (Returns 1 instead of max)      |
+| checked(System.Math.Abs(b - a)) | 1.15 ns | 2.13x  | >=0 (?)   | Crashes Application (System.OverflowException) |
 ```
-## JIT & Assembly Breakdown
+### JIT & Assembly Breakdown
 ```
 ; Input:  ecx = a (int), edx = b (int)
 ; Output: eax = return value (uint)
@@ -101,18 +101,20 @@ cmp     rcx, rdx         ; Compare 'a' and 'b' to set CPU status flags
 cmova   rax, r8          ; If a > b (Unsigned Above), replace 'rax' with 'r8'
 ret                      ; Return from method with the final delta in 'rax'
 ```
-## Usage Examples
+### Usage Examples
 ```
 // // 1. Basic Safe Delta Check
 // 
 // long longA = long.MinValue;
 // long longB = long.MaxValue;
 // 
-// // Correctly returns 18446744073709551615 (ulong.MaxValue) without overflow
+// // Correctly returns 18446744073709551615 (ulong.MaxValue) without overflow.
+//
 // ulong ulongDelta = Sys.Math.AbsDelta(longA, longB);
 // 
 // // 2. Backwards Safe Cast to Signed Type
-// // If you need to process the result back into a signed variable (long), you can check the maximum boundaries safely:
+//
+// // If you need to process the result back into a signed variable (long), you can check the maximum boundaries safely.
 // 
 // long longA = long.MinValue;
 // long longB = long.MaxValue;
@@ -123,10 +125,10 @@ ret                      ; Return from method with the final delta in 'rax'
 // {
 //     long longDelta = (long)ulongDelta; // Safe cast within bounds
 // 
-//     Console.WriteLine(\$"Delta fits inside standard signed long: {longDelta}");
+//     Console.WriteLine("Delta fits inside signed long: {0}, longDelta");
 // }
 // else
 // {
-//     Console.WriteLine("Delta is too huge for a signed long, keep using ulong!");
+//     Console.WriteLine("Delta is too huge for a signed long, keep using ulong: {0}", ulongDelta);
 // }
 ```
