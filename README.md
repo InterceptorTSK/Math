@@ -11,7 +11,7 @@ A collection of ultra-optimized, branchless, and overflow-safe C# methods design
 ## The Problem with Math.Abs(a - b)
 
 In standard C#, calculating the distance between two signed values using `System.Math.Abs(a - b)` is dangerous when dealing with extreme values (counters, indices etc):
-1. Silent Data Corruption: If `a = long.MinValue` and `b = long.MaxValue`, the operation `|a - b|` overflows signed boundaries. `System.Math.Abs(-1)` or `System.Math.Abs(1)` returns `1`, which is completely incorrect.
+1. Silent Data Corruption: For example, if `a = long.MinValue` and `b = long.MaxValue`, the operation `|a - b|` overflows signed boundaries. `System.Math.Abs(-1)` or `System.Math.Abs(1)` returns `1`, which is completely incorrect.
 2. Crash Risks: Wrapping the operation in a checked block avoids bad data but throws `System.OverflowException` and down performance.
 
 By mapping signed arithmetic to cyclic unsigned bit-representations, these methods guarantee 100% mathematical correctness across the entire range of values, while running at maximum hardware speed.
@@ -24,7 +24,7 @@ By mapping signed arithmetic to cyclic unsigned bit-representations, these metho
 
 ## API Reference
 ```
-// // The library provides 4 distinct overloads of `AbsDelta` within the `Sys.Math` static class:
+// // The library provides 4 distinct overloads of "AbsDelta" within the "Sys.Math" static class:
 //
 // namespace Sys;
 //
@@ -42,7 +42,7 @@ By mapping signed arithmetic to cyclic unsigned bit-representations, these metho
 
 ## Performance & Benchmarks
 
-Benchmarks using BenchmarkDotNet on .NET 8 / .NET 9 (x64 Architecture) comparing `AbsDelta` pattern against standard approaches:
+Benchmarks using BenchmarkDotNet on .NET 8 / .NET 9 (x64 Architecture) comparing `AbsDelta(params)` pattern against standard approaches:
 ```
 | Method                          | Mean Time | Ratio       | Mem Alloc | Behavior on Overflow (> MaxValue)         |
 |                                 |           |             |           |                                           |
