@@ -8,10 +8,10 @@
 
 A collection of ultra-optimized, branchless, and overflow-safe C# methods designed to calculate the absolute delta (difference) `|b - a|` between numeric types without triggering an `System.OverflowException` or returning corrupted data.
 
-## The Problem with Math.Abs(a - b)
+## The Problem with Math.Abs(b - a)
 
-In standard C#, calculating the distance between two signed values using `System.Math.Abs(a - b)` is dangerous when dealing with extreme values (counters, indices etc):
-1. Silent Data Corruption: For example, if `a = long.MinValue` and `b = long.MaxValue`, the operation `|a - b|` overflows signed boundaries. `System.Math.Abs(-1)` or `System.Math.Abs(1)` returns `1`, which is completely incorrect.
+In standard C#, calculating the distance between two signed values using `System.Math.Abs(b - a)` is dangerous when dealing with extreme values (counters, indices etc):
+1. Silent Data Corruption: For example, if `a = int.MinValue` and `b = int.MaxValue`, the operation `|b - a|` overflows signed boundaries. `System.Math.Abs(-1)` or `System.Math.Abs(1)` returns `1`, which is completely incorrect.
 2. Crash Risks: Wrapping the operation in a checked block avoids bad data but throws `System.OverflowException` and down performance.
 
 By mapping signed arithmetic to cyclic unsigned bit-representations, these methods guarantee 100% mathematical correctness across the entire range of values, while running at maximum hardware speed.
@@ -42,15 +42,15 @@ By mapping signed arithmetic to cyclic unsigned bit-representations, these metho
 
 ## Performance & Benchmarks
 
-Benchmarks using BenchmarkDotNet on .NET 8 / .NET 9 (x64 Architecture) comparing `AbsDelta(params)` pattern against standard approaches:
+Benchmarks using BenchmarkDotNet on .NET 8 / .NET 9 (x64 Architecture) comparing `AbsDelta(a, b)` pattern against standard approaches:
 ```
 | Method                          | Mean Time | Ratio       | Mem Alloc | Behavior on Overflow (> MaxValue)         |
 |                                 |           |             |           |                                           |
 | Sys.Math.AbsDelta(int, int)     | 0.32 ns   | 0.59x       | 0         | 100% Correct (Returns max uint)           |
 | Sys.Math.AbsDelta(long, long)   | 0.54 ns   | 1.00x (Ref) | 0         | 100% Correct (Returns max ulong)          |
 |                                 |           |             |           |                                           |
-| Standard System.Math.Abs(a - b) | 0.31 ns   | 0.57x       | 0         | Corrupted Data (Returns 1 instead of max) |
-| checked(System.Math.Abs(a - b)) | 1.15 ns   | 2.13x       | 0         | Crashes Application (OverflowException)   |
+| Standard System.Math.Abs(b - a) | 0.31 ns   | 0.57x       | 0         | Corrupted Data (Returns 1 instead of max) |
+| checked(System.Math.Abs(b - a)) | 1.15 ns   | 2.13x       | 0         | Crashes Application (OverflowException)   |
 ```
 
 ## JIT & Assembly Breakdown
