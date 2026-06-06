@@ -6,7 +6,7 @@
 
 # AbsDelta - High-Performance, Overflow-Safe Absolute Difference for .NET
 
-A collection of ultra-optimized, branchless, and overflow-safe C# methods designed to calculate the absolute delta (difference) `|b - a|` between numeric types without triggering an OverflowException or returning corrupted data.
+A collection of ultra-optimized, branchless, and overflow-safe C# methods designed to calculate the absolute delta (difference) `|b - a|` between numeric types without triggering an `System.OverflowException` or returning corrupted data.
 
 ## The Problem with Math.Abs(a - b)
 
@@ -19,12 +19,12 @@ By mapping signed arithmetic to cyclic unsigned bit-representations, these metho
 ## Features
 
 - Zero Allocations: Operating entirely within CPU registers (0 Bytes allocated).
-- Branchless Execution: Optimized into conditional move (cmovg/cmova) instructions, avoiding CPU branch mispredictions.
+- Branchless Execution: Optimized into conditional move (`cmovg/cmova`) instructions, avoiding CPU branch mispredictions.
 - Aggressive Inlining: Completely erases method invocation overhead.
 
 ## API Reference
 ```
-// // The library provides 4 distinct overloads of "AbsDelta" within the "Sys.Math" static class:
+// // The library provides 4 distinct overloads of `AbsDelta` within the `Sys.Math` static class:
 //
 // namespace Sys;
 //
@@ -42,7 +42,7 @@ By mapping signed arithmetic to cyclic unsigned bit-representations, these metho
 
 ## Performance & Benchmarks
 
-Benchmarks using BenchmarkDotNet on .NET 8 / .NET 9 (x64 Architecture) comparing "AbsDelta" pattern against standard approaches:
+Benchmarks using BenchmarkDotNet on .NET 8 / .NET 9 (x64 Architecture) comparing `AbsDelta` pattern against standard approaches:
 ```
 | Method                          | Mean Time | Ratio       | Mem Alloc | Behavior on Overflow (> MaxValue)         |
 |                                 |           |             |           |                                           |
