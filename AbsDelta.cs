@@ -25,6 +25,16 @@ namespace Sys
         // Console.WriteLine( System.Math.Abs(a - b) );   // Out as int: 1 - incorrect!
 
 
+        // // The delta value can be converted to int type, if delta <= int.MaxValue.
+        //
+        // int a, b;
+        // uint uintDelta = AbsDelta(a, b);
+        //
+        // if (uintDelta <= int.MaxValue)
+        // {
+        //     int intDelta = (int)uintDelta; // safe cast
+        // }
+
         /// <summary>Absolute delta value |b - a| without overflow.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
@@ -32,9 +42,8 @@ namespace Sys
         {
             unchecked { return (a <= b) ? (uint)b - (uint)a : (uint)a - (uint)b; }
         }
-        // Note: The delta value can be converted to int type, if delta <= int.MaxValue.
-        
-        
+
+
         /// <summary>Absolute delta value |b - a| without overflow.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
@@ -43,7 +52,17 @@ namespace Sys
             unchecked { return (a <= b) ? b - a : a - b; }
         }
 
-        
+
+        // // The delta value can be converted to long type, if delta <= long.MaxValue.
+        //
+        // long a, b;
+        // ulong ulongDelta = AbsDelta(a, b);
+        //
+        // if (ulongDelta <= long.MaxValue)
+        // {
+        //     long longDelta = (long)ulongDelta; // safe cast
+        // }
+
         /// <summary>Absolute delta value |b - a| without overflow.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
@@ -51,9 +70,8 @@ namespace Sys
         {
             unchecked { return (a <= b) ? (ulong)b - (ulong)a : (ulong)a - (ulong)b; }
         }
-        // Note: The delta value can be converted to long type, if delta <= long.MaxValue.
 
-        
+
         /// <summary>Absolute delta value |b - a| without overflow.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
