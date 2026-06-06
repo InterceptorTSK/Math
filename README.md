@@ -33,8 +33,8 @@ Features
 
 API Reference
 
-    The library provides 4 distinct overloads of "AbsDelta" within the "Sys.Math" static class:
-
+    // // The library provides 4 distinct overloads of "AbsDelta" within the "Sys.Math" static class:
+    //
     // namespace Sys;
     //
     // public static partial class Math
