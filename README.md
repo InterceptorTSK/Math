@@ -7,20 +7,13 @@
 # AbsDelta - High-Performance, Overflow-Safe Absolute Difference for .NET
 
 A collection of ultra-optimized, branchless, and overflow-safe C# methods designed to calculate the absolute delta (difference) `|b - a|` between numeric types without triggering an `System.OverflowException` or returning corrupted data.
+By mapping signed arithmetic to cyclic unsigned bit-representations, these methods guarantee 100% mathematical correctness across the entire range of values, while running at maximum hardware speed.
 
 ## The Problem with Math.Abs(b - a)
 
 In standard C#, calculating the distance between two signed values using `System.Math.Abs(b - a)` is dangerous when dealing with extreme values (counters, indices etc):
 1. Silent Data Corruption: For example, if `a = int.MinValue` and `b = int.MaxValue`, the operation `|b - a|` overflows signed boundaries. `System.Math.Abs(-1)` or `System.Math.Abs(1)` returns `1`, which is completely incorrect.
 2. Crash Risks: Wrapping the operation in a checked block avoids bad data but throws `System.OverflowException` and down performance.
-
-By mapping signed arithmetic to cyclic unsigned bit-representations, these methods guarantee 100% mathematical correctness across the entire range of values, while running at maximum hardware speed.
-
-## Features
-
-- Zero Allocations: Operating entirely within CPU registers (0 Bytes allocated).
-- Branchless Execution: Optimized into conditional move (`cmovg/cmova`) instructions, avoiding CPU branch mispredictions.
-- Aggressive Inlining: Completely erases method invocation overhead.
 
 ## API Reference
 ```
@@ -39,6 +32,11 @@ By mapping signed arithmetic to cyclic unsigned bit-representations, these metho
 //     public static ulong AbsDelta(ulong a, ulong b);
 // }
 ```
+## Features
+
+- Zero Allocations: Operating entirely within CPU registers (0 Bytes allocated).
+- Branchless Execution: Optimized into conditional move (`cmovg/cmova`) instructions, avoiding CPU branch mispredictions.
+- Aggressive Inlining: Completely erases method invocation overhead.
 
 ## Performance & Benchmarks
 
@@ -52,7 +50,6 @@ Benchmarks using BenchmarkDotNet on .NET 8 / .NET 9 (x64 Architecture) comparing
 | Standard System.Math.Abs(b - a) | 0.31 ns   | 0.57x       | 0         | Corrupted Data (Returns 1 instead of max) |
 | checked(System.Math.Abs(b - a)) | 1.15 ns   | 2.13x       | 0         | Crashes Application (OverflowException)   |
 ```
-
 ## JIT & Assembly Breakdown
 ```
 ; Input:  ecx = a (int), edx = b (int)
@@ -103,7 +100,6 @@ cmp     rcx, rdx         ; Compare 'a' and 'b' to set CPU status flags
 cmova   rax, r8          ; If a > b (Unsigned Above), replace 'rax' with 'r8'
 ret                      ; Return from method with the final delta in 'rax'
 ```
-
 ## Usage Examples
 ```
 // // 1. Basic Safe Delta Check
