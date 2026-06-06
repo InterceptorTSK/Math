@@ -28,7 +28,7 @@ namespace Sys
         // // The delta value can be converted to int type, if delta <= int.MaxValue.
         //
         // int a, b;
-        // uint uintDelta = AbsDelta(a, b);
+        // uint uintDelta = Sys.Math.AbsDelta(a, b);
         //
         // if (uintDelta <= int.MaxValue)
         // {
@@ -43,7 +43,6 @@ namespace Sys
             unchecked { return (a <= b) ? (uint)b - (uint)a : (uint)a - (uint)b; }
         }
 
-
         /// <summary>Absolute delta value |b - a| without overflow.</summary>
         [System.CLSCompliant(false)]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
@@ -56,7 +55,7 @@ namespace Sys
         // // The delta value can be converted to long type, if delta <= long.MaxValue.
         //
         // long a, b;
-        // ulong ulongDelta = AbsDelta(a, b);
+        // ulong ulongDelta = Sys.Math.AbsDelta(a, b);
         //
         // if (ulongDelta <= long.MaxValue)
         // {
@@ -70,7 +69,6 @@ namespace Sys
         {
             unchecked { return (a <= b) ? (ulong)b - (ulong)a : (ulong)a - (ulong)b; }
         }
-
 
         /// <summary>Absolute delta value |b - a| without overflow.</summary>
         [System.CLSCompliant(false)]
