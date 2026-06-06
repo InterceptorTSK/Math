@@ -1,15 +1,12 @@
 
-
 Author: Ivan Tsaryov
 Date: June 2, 2026
 Version: 0.01
 Revision: Experimental, Stable working draft
 
-
 # AbsDelta - High-Performance, Overflow-Safe Absolute Difference for .NET
 
 A collection of ultra-optimized, branchless, and overflow-safe C# methods designed to calculate the absolute delta (difference) `|b - a|` between numeric types without triggering an OverflowException or returning corrupted data.
-
 
 ## The Problem with Math.Abs(a - b)
 
@@ -19,13 +16,11 @@ In standard C#, calculating the distance between two signed values using `System
 
 By mapping signed arithmetic to cyclic unsigned bit-representations, these methods guarantee 100% mathematical correctness across the entire range of values, while running at maximum hardware speed.
 
-
 ## Features
 
-Zero Allocations: Operating entirely within CPU registers (0 Bytes allocated).
-Branchless Execution: Optimized into conditional move (cmovg/cmova) instructions, avoiding CPU branch mispredictions.
-Aggressive Inlining: Completely erases method invocation overhead.
-
+-Zero Allocations: Operating entirely within CPU registers (0 Bytes allocated).
+-Branchless Execution: Optimized into conditional move (cmovg/cmova) instructions, avoiding CPU branch mispredictions.
+-Aggressive Inlining: Completely erases method invocation overhead.
 
 ## API Reference
 ```
